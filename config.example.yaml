@@ -1,0 +1,37 @@
+# Copy to config.yaml and edit. config.yaml is git-ignored because it holds secrets.
+interface: eth0              # interface to sniff and to scope firewall rules to
+own_ip: 192.0.2.10           # this host's address (separates inbound from outbound traffic)
+window_seconds: 10
+whitelist: ["192.0.2.1"]     # never blocked: gateway, DNS, monitoring, your admin address
+slack_url: ""                # incoming-webhook URL (treat as a secret)
+
+detector:
+  sigma_threshold: 5         # z-score at which a feature counts as anomalous
+  alert_score: 0.6           # score needed to count a window as anomalous
+  mitigate_score: 0.8        # strict rate limit at or above this score
+  block_score: 0.9           # source blocking enabled at or above this score
+  per_source_block_pps: 100  # a source must send this many packets/s to be blocked
+
+mitigation:
+  dry_run: true              # keep true until you have reviewed the [DRY] output
+  block_ttl_seconds: 120     # every rule expires automatically
+  max_blocks: 10             # cap on simultaneous automatic blocks
+
+alerts:
+  cooldown_seconds: 120
+  critical_after_seconds: 300
+  log_file: alerts.log
+  email:
+    enabled: false
+    smtp_host: smtp.example.com
+    smtp_port: 587
+    user: ""
+    password: ""
+    from: ""
+    to: ""
+
+dashboard:
+  user: admin
+  password: ""               # REQUIRED: the dashboard refuses to start without one
+  bind: 192.0.2.10           # management interface only
+  port: 5000

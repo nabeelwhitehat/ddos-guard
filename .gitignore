@@ -1,0 +1,18 @@
+# environments
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# secrets and machine-specific files: never commit these
+config.yaml
+baseline.json
+baseline.backup.json
+alerts.log
+*.log
+
+# editors / OS
+.idea/
+.vscode/
+.DS_Store
